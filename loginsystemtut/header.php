@@ -18,7 +18,7 @@
       <li><a href="#">Home</a></li>
       <li><a href="#">Profil</a></li>
       <li><a href="#">About</a></li>
-      <li><a href="#">Conthbiuybugbgiyact</a></li>
+      <li><a href="#">KONTAKDIRIKU</a></li>
     </ul>
     <div>
       <form action="includes/login.inc.php" method="post">
