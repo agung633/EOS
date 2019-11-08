@@ -1,5 +1,5 @@
 <?php
-$sqljab="SELECT id_jbtn FROM t_user WHERE fullname='".$_SESSION['user']."'";
+$sqljab="SELECT id_jbtn FROM t_admin WHERE fullname='".$_SESSION['user']."'";
 $result = mysqli_query($con,$sqljab);
 $row = mysqli_fetch_array($result);
 
