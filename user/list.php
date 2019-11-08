@@ -1,5 +1,5 @@
 <?php
-$sqljab="SELECT id_jbtn FROM t_user WHERE fullname='".$_SESSION['user']."'";
+$sqljab="SELECT id_jbtn FROM t_admin WHERE fullname='".$_SESSION['user']."'";
 if(!isset($_SESSION['id_admin'])) {
    header('location: ../');
 }
@@ -16,8 +16,6 @@ if(!isset($_SESSION['id_admin'])) {
             if($row['id_jbtn'] == "1"){ ?>
       <a class="btn btn-success" href="?page=user&action=tambahadmin">Tambah Admin</a>
             <?php 
-            }else{
-                  echo '<button type="button" class="btn btn-secondary">Tambah Admin</button>';
             }
             ?>
    </div>
