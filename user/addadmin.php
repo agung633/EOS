@@ -12,7 +12,7 @@ if(isset($_POST['add_user'])) {
    $username  = $_POST['username'];
    $fullname = $_POST['fullname'];
    $password  = $_POST['password'];
-   $jabatan = $_POST['jabatan'];
+   $jabatan = ;
    $hashedpw = password_hash($password, PASSWORD_DEFAULT);
    $id = mysqli_query($con, "SELECT username FROM t_admin WHERE username='$username'");
 
@@ -52,7 +52,7 @@ if(!isset($_SESSION['id_admin'])) {
  $char = "AD";
  $kodeadmin = $char . sprintf("%03s", $noUrut);
 ?>
-<h3>Tambah Data Siswa</h3>
+<h3>Tambah Data Admin</h3>
 <hr />
 <div class="row">
     <div class="col-md-8 col-sm-12">
@@ -85,24 +85,6 @@ if(!isset($_SESSION['id_admin'])) {
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Jabatan</label>
-                <div class="col-md-6">
-                    <select name="jabatan" required="kelas" class="form-control">
-                        <option value="#">-- Pilih Jabatan --</option>
-                        <?php
-                            $kelas = mysqli_query($con, "SELECT * FROM t_jabatan");
-                            while ($key = mysqli_fetch_array($kelas)) {
-                            ?>
-                                <option value="<?php echo $key['id_jbtn']; ?>">
-                                    <?php echo $key['jabatan']; ?>
-                                </option>
-                                <?php
-                            }
-                        ?>
-                    </select>
-                </div>
-            </div>
 
             <div class="form-group">
                 <div class="col-md-8 col-md-offset-2">

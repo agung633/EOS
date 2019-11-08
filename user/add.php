@@ -1,6 +1,10 @@
 <?php
-if(!isset($_SESSION['id_admin'])) {
-   header('location: ../');
+$sqljab="SELECT id_jbtn FROM t_user WHERE fullname='".$_SESSION['user']."'";
+$result = mysqli_query($con,$sqljab);
+$row = mysqli_fetch_array($result);
+
+if($row['id_jbtn'] != "1" ) {
+   header('location: ./');
 }
 
 if(isset($_POST['add_user'])) {
@@ -12,7 +16,10 @@ if(isset($_POST['add_user'])) {
    $jbtn = $_POST['jabatan'];
    $password = $_POST['password'];
    $hashedpw = password_hash($password, PASSWORD_DEFAULT);
+  
+   
    //cek nis
+
    $get_id = $con->prepare("SELECT * FROM t_user WHERE id_user = ?");
    $get_id->bind_param('s', $nis);
    $get_id->execute();
@@ -108,7 +115,8 @@ if(isset($_POST['add_user'])) {
                                     <?php echo $key['jabatan']; ?>
                                 </option>
                                 <?php
-                            }
+                                }
+
                         ?>
                     </select>
                 </div>

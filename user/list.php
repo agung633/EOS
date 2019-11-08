@@ -1,4 +1,5 @@
 <?php
+$sqljab="SELECT id_jbtn FROM t_user WHERE fullname='".$_SESSION['user']."'";
 if(!isset($_SESSION['id_admin'])) {
    header('location: ../');
 }
@@ -9,7 +10,16 @@ if(!isset($_SESSION['id_admin'])) {
    </div>
    <div class="col-md-3 col-sm-3" style="padding-top:10px;">
       <a class="btn btn-primary" href="?page=user&action=tambah">Tambah Siswa</a>
+            <?php
+             $result = mysqli_query($con,$sqljab);
+            $row = mysqli_fetch_array($result);
+            if($row['id_jbtn'] == "1"){ ?>
       <a class="btn btn-success" href="?page=user&action=tambahadmin">Tambah Admin</a>
+            <?php 
+            }else{
+                  echo '<button type="button" class="btn btn-secondary">Tambah Admin</button>';
+            }
+            ?>
    </div>
    <div style="clear:both"></div>
    <hr />
@@ -84,7 +94,9 @@ if(!isset($_SESSION['id_admin'])) {
                   ?>
             </tbody>
       </table>
-  
+            <?php $result = mysqli_query($con,$sqljab);
+                  $row = mysqli_fetch_array($result);
+                  if($row['id_jbtn'] == "1"){ ?>
 
       </div>
 </div>
@@ -207,3 +219,4 @@ if(!isset($_SESSION['id_admin'])) {
       ?>
       </div>
 </div>
+      <?php } ?>
