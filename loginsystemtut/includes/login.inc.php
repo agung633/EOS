@@ -27,7 +27,7 @@
          // password verify di gunakan apa bila kita menyimpan passwordnya menggunakan password_hash atau metode enkripsi
          $pwdCheck = password_verify($password, $row['pwUsers']);
          if ($pwdCheck == false) {
-           header("Location: ../index.php?error=wrongpwd");
+           header("Location: ../index.php?error=wrongpwd1");
            exit();
          }
          elseif ($pwdCheck == true) {
@@ -39,7 +39,7 @@
             exit();
          }
          else {
-           header("Location: ../index.php?error=wrongpwd");
+           header("Location: ../index.php?error=wrongpwd2");
            exit();
          }
        }

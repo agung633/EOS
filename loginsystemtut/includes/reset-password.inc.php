@@ -61,17 +61,17 @@ if (isset($_POST["reset-password-submit"])) {
             $sql = "UPDATE users SET pwUsers=? WHERE emailUsers=?";
             $stmt = mysqli_stmt_init($conn);
             if (!mysqli_stmt_prepare($stmt, $sql)) {
-              echo "Telah terjadi Error!!";
+              echo "Telah terjadi Error1";
               exit();
             }else {
               $newPwdHash = password_hash($password, PASSWORD_DEFAULT);
-              mysqli_stmt_bind_param($stmt, "ss", $tokenEmail, $tokenEmail);
+              mysqli_stmt_bind_param($stmt, "ss", $newPwdHash, $tokenEmail);
               mysqli_stmt_execute($stmt);
 
               $sql = "DELETE FROM pwdReset WHERE pwdResetEmail=?";
                 $stmt = mysqli_stmt_init($conn);
-                if (!mysqli_stmt_init($stmt, $sql)) {
-                  echo "Telah terjadi error!!!";
+                if (!mysqli_stmt_prepare($stmt, $sql)) {
+                  echo "Telah terjadi error2";
                   exit();
                 }else {
                   mysqli_stmt_bind_param($stmt, "s", $tokenEmail);
