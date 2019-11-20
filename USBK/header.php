@@ -19,7 +19,7 @@
             <img src="" alt="">
           </a>
           <ul>
-            <li><a href="index.php">Home</li>
+            <li><a href="index.php">mrmrk</li>
             <li><a href="#">Portofolio</li>
             <li><a href="#">About me</li>
             <li><a href="#">Contact</li>
