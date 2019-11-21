@@ -15,7 +15,7 @@
       <img src="" alt="">
     </a>
     <ul>
-      <li><a href="#">Home</a></li>
+      <li><a href="#">Hoooooome</a></li>
       <li><a href="#">Profil</a></li>
       <li><a href="#">About</a></li>
       <li><a href="#">Contact</a></li>
