@@ -16,7 +16,7 @@ if(isset($_POST["loginuser"])){
 
     <form action="index.php" method="post">
         <table >
-            <caption><h1>Login Form</h1></caption>
+            <caption><h1>Login Form ya</h1></caption>
             <tr>
                 <td><label for="mobile_no">Mobile No: </label></td>
                 <td><input type="text" name="mobile_no" size="50"/></td>
