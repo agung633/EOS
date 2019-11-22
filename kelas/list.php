@@ -19,7 +19,7 @@ if(!isset($_SESSION['id_admin'])) {
                <th width="80px" style="text-align:center;">#</th>
                <th style="text-align:center;">Nama Kelas</th>
                <th width="150px" style="text-align:center;">Jumlah Siswa</th>
-               <th width="200px" style="text-align:center;">Opsi</th>
+               <th width="350px" style="text-align:center;">Opsi</th>
             </tr>
          </thead>
          <tbody>
@@ -48,6 +48,20 @@ if(!isset($_SESSION['id_admin'])) {
                         <a href="?page=kelas&action=hapus&id=<?php echo $data['id_kelas']; ?>" onclick="return confirm('Yakin ingin menghapus kelas ini ?');" class="btn btn-danger btn-sm">
                            Hapus
                         </a>
+                        <?php 
+                        if ($data['id_kelas'] != "K03" ){
+                        ?>
+                        <a href="?page=kelas&action=naik&id=<?php echo $data['id_kelas']; ?>" onclick="return confirm('Yakin ingin menaikan siswa kelas ini??');" class="btn btn-success btn-sm">
+                           Naik Kelas
+                        </a>
+                        <?php
+                        }
+                        else{
+                        ?>
+                        <a href="?page=kelas&action=kosong&id=<?php echo $data['id_kelas']; ?>" onclick="return confirm('Yakin ingin mengosongkan kelas ini??');" class="btn btn-success btn-sm">
+                           Hapus Siswa
+                        </a>
+                        <?php } ?>
                      </td>
                   </tr>
                   <?php
