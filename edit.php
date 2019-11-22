@@ -1,98 +1,103 @@
 <?php
-if (!isset($_SESSION['id_admin'])) {
-   header('location:./');
+if(!isset($_SESSION['id_admin'])) {
+   header('location: ../');
 }
 
-if (isset($_POST['update_profil'])) {
+$id   = strip_tags(mysqli_real_escape_string($con, $_GET['id']));
 
-   $nama     = $_POST['username'];
-   $fullname = $_POST['fullname'];
-   $pass     = $_POST['pass'];
-
-   if($nama == '' || $fullname == '' || $pass == '') {
-
-      echo '<script type="text/javascript">alert("Semua form harus diisi");</script>';
-
-   } else {
-
-      $get = $con->prepare("SELECT * FROM t_admin WHERE id_admin = ?") or die($con->error);
-      $get->bind_param('i', $_SESSION['id_admin']);
-      $get->execute();
-      $get->store_result();
-
-      if($get->num_rows() > 0) {
-
-         $get->bind_result($id, $nama1, $full, $password);
-         $get->fetch();
-
-         //validasi password
-         if(password_verify($pass, $password)) {
-
-            $sql = $con->prepare("UPDATE t_admin SET username = ?, fullname = ? WHERE id_admin = ?") or die($con->error);
-            $sql->bind_param('ssi',$nama, $fullname, $id);
-            $sql->execute();
-
-            $_SESSION['user'] = $fullname;
-
-            header('location: ./');
-
-         } else {
-
-            echo '<script type="text/javascript">alert("Akses Illegal !!");window.location.replace("?page=logout");</script>';
-
-         }
-
-      }
-
-   }
-
-}
-
-$sql = $con->prepare("SELECT * FROM t_admin WHERE id_admin = ?");
-$sql->bind_param('i', $_SESSION['id_admin']);
+$sql  = $con->prepare("SELECT * FROM t_user WHERE id_user = ?") or die($con->error);
+$sql->bind_param('s', $id);
 $sql->execute();
 $sql->store_result();
-$sql->bind_result($id, $username, $fullname, $pass);
+$sql->bind_result($id_user, $fullname, $kls, $jbtn, $jk, $pemilih, $password);
 $sql->fetch();
+
 ?>
-<h3>Edit Profil</h3>
+<h3>Update Data Siswa</h3>
 <hr />
 <div class="row">
-   <div class="col-md-8 col-md-offset-1">
-        <form action="" method="post" class="form-horizontal">
-
+    <div class="col-md-8 col-sm-12">
+        <form action="./user/update.php" method="post" class="form-horizontal">
+      
             <div class="form-group">
-                <label class="col-sm-3 control-label">Username</label>
+                <label class="col-sm-2 control-label">NIS</label>
                 <div class="col-md-4">
-                    <input type="text" name="username" value="<?php echo $username; ?>" required placeholder="Username" class="form-control">
+                    <input class="form-control" type="number" name="nis" placeholder="NIS" type="number" readonly value="<?php echo $id_user; ?>"/>
                 </div>
             </div>
-
+            
             <div class="form-group">
-                <label class="col-sm-3 control-label">Fullname</label>
+                <label class="col-sm-2 control-label">Nama Siswa</label>
+                <div class="col-md-8">
+                    <input class="form-control" name="nama" type="text" placeholder="Nama Siswa" value="<?php echo $fullname; ?>"/>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Jenis Kelamin</label>
+                <div class="col-md-10">
+                    <label class="radio-inline">
+                        <input type="radio" name="jk" value="L" id="L" <?php if($jk == 'L') { echo 'checked'; } ?>> Laki - laki
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="jk" value="P" id="P" <?php if($jk == 'P') { echo 'checked'; } ?>> Perempuan
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Kelas</label>
                 <div class="col-md-6">
-                  <input type="text" name="fullname" value="<?php echo $fullname; ?>" required placeholder="Fullname" class="form-control">
+                    <select name="kelas" required="kelas" class="form-control">
+                        <option value="#">-- Pilih Kelas --</option>
+                        <?php
+                            $kelas = mysqli_query($con, "SELECT * FROM t_kelas");
+                            while ($key = mysqli_fetch_array($kelas)) {
+                            ?>
+                                <option value="<?php echo $key['id_kelas']; ?>" <?php if ($kls == $key['id_kelas']) { echo 'selected'; } ?> >
+                                    <?php echo $key['nama_kelas']; ?>
+                                </option>
+                                <?php
+                            }
+                        ?>
+                    </select>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">Password</label>
-                <div class="col-md-4">
-                  <input type="password" class="form-control" name="pass" required="Password" placeholder="Password">
-                  <p class="help-text">Masukkan password anda</p>
+                <label class="col-sm-2 control-label">Jabatan</label>
+                <div class="col-md-6">
+                    <select name="jabatan" required="jabatan" class="form-control">
+                        <option value="#">-- Pilih Jabatan --</option>
+                        <?php
+                            $kelas = mysqli_query($con, "SELECT * FROM t_jabatan WHERE id_jbtn !='1'");
+                            while ($key = mysqli_fetch_array($kelas)) {
+                            ?>
+                                <option value="<?php echo $key['id_jbtn']; ?>" <?php if ($jbtn == $key['id_jbtn']) { echo 'selected'; } ?> >
+                                    <?php echo $key['jabatan']; ?>
+                                </option>
+                                <?php
+                            }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Password</label>
+                <div class="col-md-8">
+                    <input class="form-control" name="password" type="text" placeholder="Nama Siswa" value="<?php echo $password; ?>"/>
                 </div>
             </div>
 
             <div class="form-group">
-                <div class="col-md-8 col-md-offset-3">
-                    <button type="submit" name="update_profil" class="btn btn-success" value="Update Profil">
-                        Update Profil
-                    </button>
-                    <button type="button" onclick="window.history.go(-1)" class="btn btn-danger">
-                        Kembali
-                    </button>
+                <div class="col-md-8 col-md-offset-2">
+                    <button type="submit" name="update" value="Update User" class="btn btn-success">Update Siswa</button>
+                    <button type="button" onclick="window.history.go(-1)" class="btn btn-danger">Kembali</button>
                 </div>
             </div>
-         </form>
-   </div>
+      
+        </form>
+    </div>
 </div>
