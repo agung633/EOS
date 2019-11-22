@@ -1,7 +1,10 @@
 <?php
 if (!isset($_SESSION['id_admin'])) {
    header('location: ../');
+   
 }
+
+
 ?>
 
 <div class="row">
@@ -9,6 +12,23 @@ if (!isset($_SESSION['id_admin'])) {
       <h3>Daftar Kandidat</h3>
    </div>
    <div class="col-md-3" style="padding-top:10px;">
+   <?php 
+   $cresult =mysqli_query($con,"SELECT * FROM t_user");
+   if (!$cresult) {
+    printf("Error: %s\n", mysqli_error($con));
+    exit();
+}
+   $row =mysqli_fetch_array($cresult);
+
+   if ($row['pemilih'] == "N"){ ?>
+    <a class="btn btn-danger" href="?page=kandidat&action=aktif"onclick="return confirm('Yakin ingin aktifkan voting??');">Aktifkan Voting</a>
+   <?php
+   }
+   else { ?>
+   <a class="btn btn-danger" href="?page=kandidat&action=nonaktif" onclick="return confirm('Yakin ingin menonaktifkan voting??');">Nonaktifkan Voting</a>
+   <?php
+   }
+   ?>
       <a class="btn btn-primary" href="?page=kandidat&action=tambah">Tambah Kandidat</a>
    </div>
 </div>
@@ -32,3 +52,4 @@ if (!isset($_SESSION['id_admin'])) {
         </div>
     </div>
 </div>
+
