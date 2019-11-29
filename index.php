@@ -23,7 +23,7 @@ if(isset($_POST['submit'])) {
     $log->execute();
     $log->store_result();
     $jml = $log->num_rows();
-    $log->bind_result($id, $username, $fullname, $id_jbtn, $password);
+    $log->bind_result($id, $username, $fullname, $email, $id_jbtn, $password);
     $log->fetch();
 
       if ($jml > 0) {
@@ -97,10 +97,11 @@ if(isset($_POST['submit'])) {
       <div class="row">
         <!-- /.col -->
         <div class="col-xs-4">
-        <button type="submit" name="submit" value="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+        <button style="margin-left:16px;margin-bottom:10px;" type="submit" name="submit" value="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
         </div>
         <!-- /.col -->
       </div>
+      <p>Lupa Password?<a href="reset-password.php">Klik Disini</a></p>
     </form>
 
   </div>
