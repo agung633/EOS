@@ -12,10 +12,10 @@ if(isset($_POST['add_user'])) {
    $username  = $_POST['username'];
    $fullname = $_POST['fullname'];
    $password  = $_POST['password'];
-   $jabatan = ;
+   $email = $_POST['email'];
    $hashedpw = password_hash($password, PASSWORD_DEFAULT);
    $id = mysqli_query($con, "SELECT username FROM t_admin WHERE username='$username'");
-
+   $ada =mysqli_query($con, "SELECT email FROM t_admin WHERE email='$email'");
 
    if( $username == '' || $fullname == '' || $password == '') {
 
@@ -27,10 +27,14 @@ if(isset($_POST['add_user'])) {
 
    }else if (mysqli_num_rows($id) > 0){
     echo '<script type="text/javascript">alert("Username Sudah DIpakai");window.history.go(-1);</script>';
-    }
+    
+    }else if (mysqli_num_rows($ada) > 0){
+        echo '<script type="text/javascript">alert("Email Sudah Digunakan");window.history.go(-1);</script>';
+        
+        }
     else{
 
-      $sql = $con->prepare("INSERT INTO t_admin VALUES('$id_admin', '$username', '$fullname', '$jabatan', '$hashedpw')");
+      $sql = $con->prepare("INSERT INTO t_admin VALUES('$id_admin', '$username', '$fullname', '$email', '1 ', '$hashedpw')");
       $sql->execute();
 
 
@@ -82,6 +86,13 @@ if(!isset($_SESSION['id_admin'])) {
                 <label class="col-sm-2 control-label">Password</label>
                 <div class="col-md-8">
                     <input class="form-control" name="password" type="password" placeholder="Nama Siswa"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Email</label>
+                <div class="col-md-8">
+                    <input class="form-control" name="email" type="text" placeholder="Nama Siswa"/>
                 </div>
             </div>
 

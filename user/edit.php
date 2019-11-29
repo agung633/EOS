@@ -70,28 +70,35 @@ $sql->fetch();
                     <select name="jabatan" required="jabatan" class="form-control">
                         <option value="#">-- Pilih Jabatan --</option>
                         <?php
-                            $kelas = mysqli_query($con, "SELECT * FROM t_jabatan");
+                           $jbtn = $con->prepare("SELECT id_jbtn FROM t_user WHERE id_jbtn LIKE '3'");
+                           $jbtn->execute();
+                           $jbtn->store_result();
+                           $jbn = $jbtn->num_rows();
+                           if ($jbn > 0){
+                            $kelas = mysqli_query($con, "SELECT * FROM t_jabatan WHERE id_jbtn = '2'");
                             while ($key = mysqli_fetch_array($kelas)) {
                             ?>
-                                <option value="<?php echo $key['id_jbtn']; ?>" <?php if ($jbtn == $key['id_jbtn']) { echo 'selected'; } ?> >
+                                <option value="<?php echo $key['id_jbtn']; ?>">
                                     <?php echo $key['jabatan']; ?>
                                 </option>
+                                </select> <center> <p style="background-color:rgba(255, 91, 91, 0.4);padding:10px 0px;margin-bottom:0px; margin-top:15px;">Maaf Ketua Osis Sudah Ada</p></center><?php }
+
+                           }else{
+                            $kelas = mysqli_query($con, "SELECT * FROM t_jabatan WHERE id_jbtn != '1'");
+                            while ($key = mysqli_fetch_array($kelas)) {
+                            ?>
+                                <option value="<?php echo $key['id_jbtn']; ?>">
+                                    <?php echo $key['jabatan']; ?>
+                                </option>
+                                
                                 <?php
-                            }
+                                }}
+
                         ?>
                     </select>
                 </div>
             </div>
             
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Pemilih</label>
-                <div class="col-md-6">
-                    <select name="pemilih" required="Pemilih" class="form-control">
-                        <option value="Y" <?php if($pemilih == 'Y') { echo 'selected';} ?>>Aktif</option>
-                        <option value="N" <?php if($pemilih == 'N') { echo 'selected';} ?>>Tidak</option>
-                    </select>
-                </div>
-            </div>
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">Password</label>

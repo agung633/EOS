@@ -1,5 +1,5 @@
 <?php
-$sqljab="SELECT id_jbtn FROM t_admin WHERE fullname='".$_SESSION['user']."'";
+$sqljab="SELECT * FROM t_admin WHERE fullname='".$_SESSION['user']."'";
 if(!isset($_SESSION['id_admin'])) {
    header('location: ../');
 }
