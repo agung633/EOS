@@ -9,12 +9,13 @@ if(!isset($_SESSION['id_admin'])) {
       <h3>Daftar Siswa</h3>
    </div>
    <div class="col-md-3 col-sm-3" style="padding-top:10px;">
+   <a class="btn btn-success" href="?page=user&action=import"><i class="fa fa-file"></i>&nbsp;Import</a>
       <a class="btn btn-primary" href="?page=user&action=tambah">Tambah Siswa</a>
             <?php
              $result = mysqli_query($con,$sqljab);
             $row = mysqli_fetch_array($result);
             if($row['id_jbtn'] == "1"){ ?>
-      <a class="btn btn-success" href="?page=user&action=tambahadmin">Tambah Admin</a>
+      <a class="btn btn-warning" href="?page=user&action=tambahadmin"></i>Tambah Admin</a>
             <?php 
             }
             ?>
@@ -22,6 +23,10 @@ if(!isset($_SESSION['id_admin'])) {
    <div style="clear:both"></div>
    <hr />
    <div class="col-md-10 col-sm-12">
+  <?php if(isset($_GET['berhasil'])){
+		echo '<div style="background:rgba(51,255,51,0.4);padding:10px 0px 1px 0px;text-align:center;color:black;"><p>'.$_GET["berhasil"].'&nbsp;Baris Ter-input</p></div>';
+	}
+            ?>
       <table class="table table-striped table-hover">
             <thead>
                   <tr>

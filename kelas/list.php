@@ -8,6 +8,7 @@ if(!isset($_SESSION['id_admin'])) {
 </div>
 <div class="col-md-3" style="padding-top:10px;">
    <a class="btn btn-primary" href="?page=kelas&action=tambah">Tambah Kelas</a>
+   <a class="btn btn-success" href="./kelas/buat.php" target="_blank"><i class="fa fa-file"></i>&nbsp;&nbsp;Export</a>
 </div>
 <div style="clear:both"></div>
 <hr />

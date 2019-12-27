@@ -1,13 +1,19 @@
 <?php
+session_start();
 ob_start();
 
-session_start();
 if (!isset($_SESSION['id_admin'])) {
    header('location: ./');
 }
 define('BASEPATH', dirname(__FILE__));
 
 include('../include/connection.php');
+$sqljab="SELECT id_jbtn FROM t_admin WHERE fullname='".$_SESSION['user']."'";
+$result = mysqli_query($con,$sqljab);
+$row = mysqli_fetch_array($result);
+$sqlj="SELECT jabatan FROM t_jabatan WHERE id_jbtn='".$row['id_jbtn']."'";
+$result1 = mysqli_query($con,$sqlj);
+$row1 = mysqli_fetch_array($result1);
 ?>
 <!DOCTYPE html>
 <html>
@@ -66,7 +72,10 @@ include('../include/connection.php');
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <span class="hidden-xs"><i class="fa fa-user"></i> <?php echo $_SESSION['user']; ?></span> &nbsp;
+                  <span class="hidden-xs"><i class="fa fa-user"></i> <?php echo $_SESSION['user']; ?> (<?php 
+                    
+                    echo $row1['jabatan'];
+                  ?>)</span> &nbsp;
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
@@ -77,7 +86,7 @@ include('../include/connection.php');
                     <a href="?page=change_password">Ganti Password</a>
                   </li>
                   <li>
-                    <a data-toggle="modal" href="#myModal">Sign out</a>
+                    <a href="?page=logout" onclick="return confirm('Yakin ingin Logout?');">Sign out</a>
                   </li>
                 </ul>
               </li>
@@ -95,20 +104,34 @@ include('../include/connection.php');
             <li <?php if (!isset($_GET['page'])) { echo 'class="active"'; } ?>>
                 <a href="./" ><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
             </li>
+            <li>
+                <a href="?page=perolehan"><i class="fa fa-home"></i> <span>Landing Page</span></a>
+                <ul class="treeview-menu">
+                  <li><a href="?page=img"><i class="fa fa-circle-o"></i> Image Bg</a></li>
+                  <li><a href="?page=ann"><i class="fa fa-circle-o"></i> Announcement</a></li>
+              </ul>
+            </li>
+            <li>
+                <a href="?page=perolehan"><i class="fa fa-book"></i> <span>Manajemen Ujian</span></a>
+                <ul class="treeview-menu">
+                  <li><a href="?page=ujian"><i class="fa fa-circle-o"></i> Tambah / Edit Ujian</a></li>
+                  <li><a href="?page=soal"><i class="fa fa-circle-o"></i> Tambah / Edit Soal</a></li>
+              </ul>
+            </li>
             <li <?php if (isset($_GET['page']) && $_GET['page'] == 'user') { echo 'class="active"'; } ?>>
                 <a href="?page=user"><i class="fa fa-user-plus"></i>  <span>Tambah User</span></a>
             </li>
             <li <?php if (isset($_GET['page']) && $_GET['page'] == 'kandidat') { echo 'class="active"'; } ?>>
-                <a href="?page=kandidat"><i class="fa fa-users"></i> <span>Manajemen Kandidat</span></a>
+                <a href="?page=kandidat"><i class="fa fa-users"></i> <span>Calon Ketua Osis</span></a>
             </li>
             <li <?php if (isset($_GET['page']) && $_GET['page'] == 'kelas') { echo 'class="active"'; } ?>>
                 <a href="?page=kelas"><i class="fa fa-university"></i> <span>Manajemen Kelas</span></a>
             </li>
-            <li <?php if (isset($_GET['page']) && $_GET['page'] == 'soal') { echo 'class="active"'; } ?>>
-                <a href="?page=soal"><i class="fa fa-question"></i> <span>Soal</span></a>
+            <!--<li <?php// if (isset($_GET['page']) && $_GET['page'] == 'soal') { echo 'class="active"'; } ?>>
+                <a href="?page=soal"><i class="fa fa-question"></i> <span>Soal</span></a>-->
             </li>
            <li  <?php if (isset($_GET['page']) && $_GET['page'] == 'calonosis') { echo 'class="active"'; } ?>>
-                <a href="?page=calonosis"><i class="	fa fa-mortar-board"></i> <span>Kandidat Osis</span></a>
+                <a href="?page=calonosis"><i class="	fa fa-mortar-board notif"></i> <span>Kandidat Osis</span></a>
             </li>
             <li <?php if (isset($_GET['page']) && $_GET['page'] == 'perolehan') { echo 'class="active"'; } ?>>
                 <a href="?page=perolehan"><i class="fa fa-bar-chart"></i> <span>Perolehan</span></a>
@@ -119,24 +142,7 @@ include('../include/connection.php');
       </aside>
 
       <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" id="myModalLabel">Sign Out</h4>
-                </div>
-                <div class="modal-body">
-                  Apakah anda yakin ingin keluar dari aplikasi ini?
-                </div>
-                <div class="modal-footer">
-                  <a href="?page=logout" class="btn btn-danger">Sign Out</a>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </div>
-          </div>
+     <div class="content-wrapper">
         </nav>
         <!-- Main content -->
         <section class="content">
@@ -168,17 +174,26 @@ include('../include/connection.php');
                         case 'soal':
                             include('./soal/index.php');
                             break;
+                        case 'ujian':
+                            include('./soal/ujian.php');
+                            break;
+                        case 'ann':
+                            include('./announ/index.php');
+                            break;
                         case 'edit_profil':
                             include('./edit.php');
-                            break;
+                        break;
                         case 'change_password':
                             include('./pass.php');
+                            break;
+                        case 'img':
+                            include('./img/index.php');
                             break;
                         case 'logout':
                             unset($_SESSION['id_admin']);
                             unset($_SESSION['user']);
 
-                            header('location:./');
+                            header('location:./index.php');
                             break;
                         default:
                             include('./welcome.php');
@@ -189,10 +204,14 @@ include('../include/connection.php');
                   }
                   ?>
               </div>
+              <?php if (!isset($_GET['page'])) { include_once "ann.php"; } ?>
+              <?php if (isset($_GET['action']) && $_GET['action'] == 'adds') {include "soal/listsoal.php"; }?>
               <!-- /.box -->
             </div>
+            
             <!-- /.col -->
           </div>
+          
           <!-- /.row -->
 
         </section>
@@ -221,6 +240,8 @@ include('../include/connection.php');
     <script type="text/javascript" src="../assets/js/utils.js"></script>
     <script type="text/javascript" src="../assets/js/FileSaver.min.js"></script>
     <script type="text/javascript" src="../assets/js/canvas-toBlob.js"></script>
+    <script type="text/javascript" src="../assets/js/fetch.js"></script>
+    <script type="text/javascript" src="notifikasi.js"></script>
     <?php } ?>
     <script type="text/javascript">
     // slideToggle()
@@ -238,6 +259,7 @@ include('../include/connection.php');
           saveAs(blob, 'chart.png');
       });
     });
+
     <?php
     if (isset($_GET['page']) && $_GET['page'] == 'kandidat') { ?>
       function tampil() {

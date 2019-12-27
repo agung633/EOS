@@ -22,6 +22,10 @@ if (isset($_GET['action'])) {
          include('./user/editadmin.php');
          break;
 
+      case 'import':
+         include('./user/import.php');
+         break;
+
       case 'hapus':
 
          if (isset($_GET['id'])) {

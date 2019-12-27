@@ -13,10 +13,23 @@ if (isset($_GET['action'])) {
    break;
 
          case 'hapus':
-            $sql = $con->prepare("DELETE FROM t_ann ");
-            $sql->execute();
+            if (isset($_GET['id'])) {
+
+               $id   = strip_tags(mysqli_real_escape_string($con, $_GET['id']));
+   
+               $sql   = $con->prepare("DELETE FROM images WHERE id = ?");
+               $sql->bind_param('s', $id);
+               $sql->execute();
+   
+               header('location: ?page=img');
+            
+            
          
-            header('location: ?page=ann&ann=del');
+            } else {
+   
+               header('location: ./');
+   
+            }
          break;
        
        default:

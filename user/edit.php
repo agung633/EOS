@@ -5,12 +5,16 @@ if(!isset($_SESSION['id_admin'])) {
 
 $id   = strip_tags(mysqli_real_escape_string($con, $_GET['id']));
 
+$sasa = mysqli_query($con,"SELECT * FROM t_user Where id_user ='$id'");
+$row = mysqli_fetch_array($sasa);
+
 $sql  = $con->prepare("SELECT * FROM t_user WHERE id_user = ?") or die($con->error);
 $sql->bind_param('s', $id);
 $sql->execute();
 $sql->store_result();
-$sql->bind_result($id_user, $fullname, $kls, $jbtn, $jk, $pemilih, $password);
+$sql->bind_result($id_user, $fullname, $kls, $jbtn, $jk, $foto, $pemilih, $password);
 $sql->fetch();
+
 
 ?>
 <h3>Update Data Siswa</h3>
@@ -76,19 +80,19 @@ $sql->fetch();
                            $jbn = $jbtn->num_rows();
                            if ($jbn > 0){
                             $kelas = mysqli_query($con, "SELECT * FROM t_jabatan WHERE id_jbtn = '2'");
-                            while ($key = mysqli_fetch_array($kelas)) {
+                            while ($koy = mysqli_fetch_array($kelas)) {
                             ?>
-                                <option value="<?php echo $key['id_jbtn']; ?>">
-                                    <?php echo $key['jabatan']; ?>
+                                <option value="<?php echo $koy['id_jbtn']; ?>" <?php if ($row['id_jbtn'] == $koy['id_jbtn']) { echo 'selected'; } ?> >
+                                    <?php echo $koy['jabatan']; ?>
                                 </option>
                                 </select> <center> <p style="background-color:rgba(255, 91, 91, 0.4);padding:10px 0px;margin-bottom:0px; margin-top:15px;">Maaf Ketua Osis Sudah Ada</p></center><?php }
 
                            }else{
                             $kelas = mysqli_query($con, "SELECT * FROM t_jabatan WHERE id_jbtn != '1'");
-                            while ($key = mysqli_fetch_array($kelas)) {
+                            while ($kay = mysqli_fetch_array($kelas)) {
                             ?>
-                                <option value="<?php echo $key['id_jbtn']; ?>">
-                                    <?php echo $key['jabatan']; ?>
+                                <option value="<?php echo $kay['id_jbtn']; ?>" <?php if ($row['id_jbtn'] == $kay['id_jbtn']) { echo 'selected'; } ?> >
+                                    <?php echo $kay['jabatan']; ?>
                                 </option>
                                 
                                 <?php
@@ -96,6 +100,7 @@ $sql->fetch();
 
                         ?>
                     </select>
+
                 </div>
             </div>
             

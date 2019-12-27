@@ -3,7 +3,13 @@
       <h3>Upload Image</h3>
    </div>
    <div class="col-md-3 col-sm-3" style="padding-top:10px;">
+   <?php 
+   $sql = mysqli_query($con, "SELECT * FROM images");
+   if (mysqli_num_rows($sql) == 3) { 
+   } else{?>
+
    <a href="?page=img&action=tambah" class="btn btn-primary" type="submit" name="submit">Upload</a>
+   <?php } ?>
 </div>
 
 <div class="col-md-10 col-sm-12"> 
@@ -35,10 +41,7 @@
             <td style="text-align:center;vertical-align:middle;"><?php echo $no++;?></td>
 	      <td style="text-align:center;vertical-align:middle;"><img src="<?php echo "../assets/img/".$d['file_name']; ?>" width="10%"></td>
             <td style="text-align:center;vertical-align:middle;">
-                              <a href="?page=user&action=edit&id=<?php echo $data['id_user']; ?>" class="btn btn-warning btn-sm">
-                              Edit
-                              </a>
-                              <a href="?page=user&action=hapus&id=<?php echo $data['id_user']; ?>" onclick="return confirm('Yakin ingin menghapus user ini ?');" class="btn btn-danger btn-sm">
+                              <a href="?page=img&action=hapus&id=<?php echo $d['id']; ?>" onclick="return confirm('Yakin ingin menghapus gambar ini ?');" class="btn btn-danger btn-sm">
                               Hapus
                               </a>
                         </td>		
@@ -50,4 +53,5 @@ echo "<tr>
       </tr>";
 } ?>
       </table>
+      <h5>* Anda Hanya Bisa Menambahkan 1 Gambar</h5>
 </div>

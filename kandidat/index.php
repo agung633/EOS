@@ -17,19 +17,7 @@ if (isset($_GET['action'])) {
       case 'view':
          include('./kandidat/view.php');
          break;
-      
-      case 'nonaktif':
-            $sql = $con->prepare("UPDATE t_user SET pemilih='N'");
-            $sql->execute();
-         
-            header('location: ?page=kandidat');
-      break;
-      case 'aktif':
-            $sql = $con->prepare("UPDATE t_user SET pemilih='Y'");
-            $sql->execute();
-         
-            header('location: ?page=kandidat');
-      break;
+
       case 'hapus':
 
          if (isset($_GET['id'])) {
@@ -52,7 +40,7 @@ if (isset($_GET['action'])) {
 
          } else {
 
-            header('location:list.php?page=ada');
+            header('location: ./');
 
          }
 

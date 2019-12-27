@@ -6,10 +6,9 @@ if(!isset($_SESSION['id_admin'])) {
 
 <div class="row">
    <div class="col-md-9 col-sm-9">
-      <h3>Daftar Soal</h3>
+      <h3>Daftar Kategori</h3>
    </div>
    <div class="col-md-3 col-sm-3" style="padding-top:10px;">
-<a class="btn btn-primary" href="?page=soal&action=addsoal">Tambah Soal</a>
 </div>
    <div style="clear:both"></div>
    <hr />
@@ -18,9 +17,8 @@ if(!isset($_SESSION['id_admin'])) {
             <thead>
                   <tr>
                   <th style="text-align:center;">#</th>
-                  <th style="text-align:center;">Soal</th>
-                  <th style="text-align:center;">Pilgan</th>
-                  <th style="text-align:center;">Jawaban</th>
+                  <th style="text-align:center;">Nama Ujian</th>
+                  <th style="text-align:center;">Waktu</th>
                   <th width="200px" style="text-align:center;">Opsi</th>
 
                   </tr>
@@ -38,7 +36,7 @@ if(!isset($_SESSION['id_admin'])) {
                         }
                   $start  = ($hlm - 1) * 4;
 
-                  $sql = mysqli_query($con, "SELECT * FROM quiz LIMIT $start,5");
+                  $sql = mysqli_query($con, "SELECT * FROM t_skategori LIMIT $start,5");
 
                   if (mysqli_num_rows($sql) > 0) {
 
@@ -50,25 +48,14 @@ if(!isset($_SESSION['id_admin'])) {
                               <?php echo $no++; ?>
                         </td>
                         <td style="padding-left:25px;vertical-align:middle;">
-                              <?php echo $data['que']; ?>
+                              <?php echo $data['kategori']; ?>
                         </td>
                         <td style="text-align:center;vertical-align:middle;">
-                              <ol type="A">
-                              <li><?php echo $data['option1']; ?></li>
-                              <li><?php echo $data['option2']; ?></li>
-                              <li><?php echo $data['option3']; ?></li>
-                              <li><?php echo $data['option4']; ?></li>
-                              <ol>
+                              <?php echo $data['waktu']; ?>
                         </td>
                         <td style="text-align:center;vertical-align:middle;">
-                              <?php echo $data['ans']; ?>
-                        </td>
-                        <td style="text-align:center;vertical-align:middle;">
-                              <a href="?page=soal&action=edit&id=<?php echo $data['id_soal']; ?>" class="btn btn-warning btn-sm">
-                              Edit
-                              </a>
-                              <a href="?page=user&action=hapus1&id=<?php echo $data['id_soal']; ?>" onclick="return confirm('Yakin ingin menghapus user ini ?');" class="btn btn-danger btn-sm">
-                              Hapus
+                              <a href="?page=soal&action=adds&id=<?php echo $data['idkategori']; ?>" class="btn btn-primary btn-sm">
+                              Select
                               </a>
                         </td>
 
@@ -99,7 +86,7 @@ if(!isset($_SESSION['id_admin'])) {
          }		//end if $hlm > 1
 
 
-         $hitung = mysqli_num_rows(mysqli_query($con, "SELECT * FROM t_user"));
+         $hitung = mysqli_num_rows(mysqli_query($con, "SELECT * FROM t_skategori"));
 
          $total  = ceil($hitung /4 );
          for ($i = 1; $i <= $total ; $i++) { //start for

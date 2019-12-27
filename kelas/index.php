@@ -24,6 +24,7 @@ if (isset($_GET['action'])) {
             $sql->bind_param('s', $id_kelas);
             $sql->execute();
 
+                        
             header('location: ?page=kelas');
 
          } else {

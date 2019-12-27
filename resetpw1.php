@@ -22,7 +22,7 @@ if (isset($_POST["reset-password-submit"])) {
   include('../include/connection.php');
 
   $sql = "SELECT * FROM pwdReset WHERE pwdResetSelector=? AND pwdResetExpire >= ?";
-  $stmt = mysqli_stmt_init($conn);
+  $stmt = mysqli_stmt_init($con);
   if (!mysqli_stmt_prepare($stmt, $sql)) {
     echo "Telah terjadi Error!";
     exit();
@@ -46,8 +46,8 @@ if (isset($_POST["reset-password-submit"])) {
 
         $tokenEmail = $row['pwdResetEmail'];
 
-        $sql = "SELECT * FROM users WHERE emailUsers=?;";
-        $stmt = mysqli_stmt_init($conn);
+        $sql = "SELECT * FROM t_admin WHERE email=?;";
+        $stmt = mysqli_stmt_init($con);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
           echo "Telah terjadi Error!";
           exit();
@@ -60,8 +60,8 @@ if (isset($_POST["reset-password-submit"])) {
             exit();
           }else {
 
-            $sql = "UPDATE users SET pwUsers=? WHERE emailUsers=?";
-            $stmt = mysqli_stmt_init($conn);
+            $sql = "UPDATE t_admin SET password=? WHERE email=?";
+            $stmt = mysqli_stmt_init($con);
             if (!mysqli_stmt_prepare($stmt, $sql)) {
               echo "Telah terjadi Error1";
               exit();
@@ -71,14 +71,14 @@ if (isset($_POST["reset-password-submit"])) {
               mysqli_stmt_execute($stmt);
 
               $sql = "DELETE FROM pwdReset WHERE pwdResetEmail=?";
-                $stmt = mysqli_stmt_init($conn);
+                $stmt = mysqli_stmt_init($con);
                 if (!mysqli_stmt_prepare($stmt, $sql)) {
                   echo "Telah terjadi error2";
                   exit();
                 }else {
                   mysqli_stmt_bind_param($stmt, "s", $tokenEmail);
                   mysqli_stmt_prepare($stmt);
-                  header("Location: ../signup.php?newpwd=passwordterupdate");
+                  header("Location: index.php?newpwd=passwordterupdate");
                 }
 
 

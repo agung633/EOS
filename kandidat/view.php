@@ -11,18 +11,12 @@ $sql->store_result();
 $sql->bind_result($id, $nama, $foto, $visi, $misi, $suara, $periode);
 $sql->fetch();
 ?>
-<style>
-            .img {
-            height: 200px;
-            width: 300px;
-         }
-   </style>
 <h3>Detail Kandidat</h3>
 <hr />
 <div class="row">
    <div class="col-md-3">
       <div class="callout text-center">
-         <img src="../assets/img/kandidat/<?php echo $foto; ?>" alt="<?php echo $foto; ?>" class="img-responsive img">
+         <img src="../assets/img/kandidat/<?php echo $foto; ?>" alt="<?php echo $foto; ?>" class="img-responsive">
       </div>
    </div>
    <div class="col-md-9" style="padding-top:20px;">

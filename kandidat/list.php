@@ -45,11 +45,33 @@ if (!isset($_SESSION['id_admin'])) {
             ?>
         </select>
     </div>
+
     <div style="clear:both"></div>
     <br />
     <div class="col-md-12">
-        <div id="data">
+    <div id="data">      
+        <div class="row">
+        <?php 
+    $sql = mysqli_query($con, "SELECT * FROM t_kandidat");
+    while($data = mysqli_fetch_array($sql)) {
+    ?>
+            <div class="col-md-3">
+                <div class="thumbnail">
+                    <img class="kandidat" src="../assets/img/kandidat/<?php echo $data['foto']; ?>">
+                    <div class="suara">
+                        <span class="badge alert-success"><?php echo $data['suara']; ?> Suara</span>
+                    </div>
+                    <div class="caption" style="text-align:center">
+                        <h4><?php echo $data['nama_calon']; ?></h4>
+                        <a href="?page=kandidat&amp;action=edit&amp;id=<?php echo $data['id_kandidat']; ?>" class="btn btn-warning">Edit</a>
+                        <a href="?page=kandidat&amp;action=view&amp;id=<?php echo $data['id_kandidat']; ?>" class="btn btn-success">View</a>
+                        <a href="?page=kandidat&amp;action=hapus&amp;id=<?php echo $data['id_kandidat']; ?>" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus kandidat ini ?')">Hapus</a>
+                  </div>
+                </div>
+            </div>
+            <?php }?>
         </div>
+      </div>
     </div>
 </div>
 

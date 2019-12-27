@@ -13,6 +13,7 @@ if(isset($_POST['add_user'])) {
    $fullname = $_POST['fullname'];
    $password  = $_POST['password'];
    $email = $_POST['email'];
+   $jabatan = $_POST['jabatan'];
    $hashedpw = password_hash($password, PASSWORD_DEFAULT);
    $id = mysqli_query($con, "SELECT username FROM t_admin WHERE username='$username'");
    $ada =mysqli_query($con, "SELECT email FROM t_admin WHERE email='$email'");
@@ -34,7 +35,7 @@ if(isset($_POST['add_user'])) {
         }
     else{
 
-      $sql = $con->prepare("INSERT INTO t_admin VALUES('$id_admin', '$username', '$fullname', '$email', '1 ', '$hashedpw')");
+      $sql = $con->prepare("INSERT INTO t_admin VALUES('$id_admin', '$username', '$fullname', '$email', '$jabatan', '$hashedpw')");
       $sql->execute();
 
 
@@ -86,6 +87,39 @@ if(!isset($_SESSION['id_admin'])) {
                 <label class="col-sm-2 control-label">Password</label>
                 <div class="col-md-8">
                     <input class="form-control" name="password" type="password" placeholder="Nama Siswa"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Jabatan</label>
+                <div class="col-md-6">
+                    <select name="jabatan" required="jabatan" class="form-control">
+                        <option value="#">-- Pilih Jabatan --</option>
+                        <?php
+                        $jbtn = $con->prepare("SELECT id_jbtn FROM t_admin WHERE id_jbtn LIKE '3'");
+                        $jbtn->execute();
+                        $jbtn->store_result();
+                        $jbn = $jbtn->num_rows();
+                        if ($jbn > 0){
+                         $kelas = mysqli_query($con, "SELECT * FROM t_jabatan WHERE id_jbtn = '2'");
+                         while ($key = mysqli_fetch_array($kelas)) {
+                         ?>
+                             <option value="<?php echo $key['id_jbtn']; ?>">
+                                 <?php echo $key['jabatan']; ?>
+                             </option>
+                             </select> <center> <p style="background-color:rgba(255, 91, 91, 0.4);padding:10px 0px;margin-bottom:0px; margin-top:15px;">Maaf Ketua Osis Sudah Ada</p></center><?php }
+
+                        }else{
+                            $kelas = mysqli_query($con, "SELECT * FROM t_jabatan WHERE id_jbtn != '1'");
+                            while ($key = mysqli_fetch_array($kelas)) {
+                            ?>
+                                <option value="<?php echo $key['id_jbtn']; ?>">
+                                    <?php echo $key['jabatan']; ?>
+                                </option>
+                                
+                            <?php }}
+                        ?>
+                    </select>
                 </div>
             </div>
 

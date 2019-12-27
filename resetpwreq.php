@@ -1,8 +1,12 @@
 <?php
 
+require 'mail/phpmailer/PHPMailerAutoload.php';
 if (isset($_POST["reset-request-submit"])) {
+  
+  define('BASEPATH', dirname(__FILE__));
+  include '../include/connection.php';
   $userEmail = $_POST["email"];
-  $id = mysqli_query($con, "SELECT email FROM t_admin WHERE email='$userEmail'");
+  $id = mysqli_query($con, "SELECT * FROM t_admin WHERE email='$userEmail'");
   $ada = mysqli_num_rows($id);
 
   if($userEmail == null){
@@ -19,8 +23,7 @@ if (isset($_POST["reset-request-submit"])) {
 
   $expires = date("U") + 1800;
   
-  define('BASEPATH', dirname(__FILE__));
-  include '../include/connection.php';
+
 
  
 
@@ -51,24 +54,35 @@ if (isset($_POST["reset-request-submit"])) {
   mysqli_stmt_close($stmt);
   mysqli_close($con);
 
-  $to = $userEmail;
+ $mail = new PHPMailer;
+$mail->isSMTP(); //baris ini wajib di disable kalau mau di upload ke live sever
+$mail->Host='smtp.gmail.com';
+$mail->Port=587;
+$mail->SMTPAuth=true;
+$mail->SMTPSecure='tls';
 
-  $subject = 'Reset Password anda Untuk Akun Anda Sendiri!';
+$mail->Username='emailsyetan@gmail.com';
+$mail->Password='T00yol99';
 
-  $message = '<p>Kami mengirim permintaan reset password anda ke pusat. Link password anda akan di kirim kan kepada email anda, jika anda tidak merasa melakukan reset password, anda bisa mengabaikan email ini</p>';
-  $message .= '<p> Ini adalah link untuk mereset password anda:</br>';
-  $message .= '<a href="' . $url . '">' . $url .'</a></p>';
+$mail->setFrom('emailsyetan@gmail.com','SyetanUhU');
+$mail->addAddress("$userEmail");
+$mail->addReplyTo('emailsyetan@gmail.com');
 
-  $headers = "From : SMA IBRAHIMY <smaibrahimy@gmail.com>\r\n";
-  $headers .= "Reply to :smaibrahimy@gmail.com\r\n";
-  $headers .= "Content-type: text/html\r\n";
-
-  mail($to, $subject, $message, $headers);
-
-  header("Location: ./reset-password.php?reset=success");
+$mail->isHTML(true);
+$mail->Subject='PHP Mailer Subject';
+$mail->Body='<p><a href="' . $url . '"><button>Ehoy</button></a></p>';
+if($mail->send()){
+	header("Location: ./reset-password.php?reset=success");
 }
-
-} else {
+else{
+	echo "Pesan telah terkirim";
+ }
+ // dari sini
+ }} else {
   header("Location: ../index.php");
 }
+ 
+
+
+
 

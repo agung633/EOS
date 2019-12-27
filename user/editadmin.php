@@ -9,7 +9,7 @@ $sql  = $con->prepare("SELECT * FROM t_admin WHERE id_admin = ?") or die($con->e
 $sql->bind_param('s', $id);
 $sql->execute();
 $sql->store_result();
-$sql->bind_result($id_admin, $username, $fullname, $id_jbtn, $password);
+$sql->bind_result($id_admin, $username, $fullname,$email, $id_jbtn, $password);
 $sql->fetch();
 
 ?>
@@ -46,6 +46,21 @@ $sql->fetch();
                     <input class="form-control" name="password" type="text" placeholder="Nama Siswa" value="<?php echo $password; ?>"/>
                 </div>
             </div>
+
+            <?php
+                        $jbtn = $con->prepare("SELECT id_jbtn FROM t_admin WHERE id_jbtn = '1'");
+                        $jbtn->execute();
+                        $jbtn->store_result();
+                        $jbn = $jbtn->num_rows();
+                        if ($jbn > 0){ ?>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Jabatan</label>
+                <div class="col-md-4">
+                    <input class="form-control" name="jabatann" type="text" placeholder="NIS" type="number" readonly value="Super Admin"/>
+                </div>
+            </div>
+                            
+                        <?php }else{ ?>
             
             <div class="form-group">
                 <label class="col-sm-2 control-label">Jabatan</label>
@@ -53,7 +68,7 @@ $sql->fetch();
                     <select name="jabatan" required="jabatan" class="form-control">
                         <option value="#">-- Pilih Jabatan --</option>
                         <?php
-                            $kelas = mysqli_query($con, "SELECT * FROM t_jabatan");
+                            $kelas = mysqli_query($con, "SELECT * FROM t_jabatan Where id_jbtn != '1 '");
                             while ($key = mysqli_fetch_array($kelas)) {
                             ?>
                                 <option value="<?php echo $key['id_jbtn']; ?>" <?php if ($id_jbtn == $key['id_jbtn']) { echo 'selected'; } ?> >
@@ -63,6 +78,14 @@ $sql->fetch();
                             }
                         ?>
                     </select>
+                </div>
+            </div>
+                        <?php }?>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Email</label>
+                <div class="col-md-8">
+                    <input class="form-control" name="email" type="text" value="<?php echo $email; ?>" placeholder="Nama Siswa"/>
                 </div>
             </div>
             
