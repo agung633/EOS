@@ -13,6 +13,9 @@ if (isset($_GET['action'])) {
       case 'edit':
          include('./soal/edit.php');
          break;
+      case 'adds':
+         include('./soal/addsoal.php');
+         break;
 
       case 'hapus':
 
@@ -20,11 +23,11 @@ if (isset($_GET['action'])) {
 
             $nis   = strip_tags(mysqli_real_escape_string($con, $_GET['id']));
 
-            $sql   = $con->prepare("DELETE FROM quiz WHERE id_soal = ?");
+            $sql   = $con->prepare("DELETE FROM t_skategori WHERE idkategori = ?");
             $sql->bind_param('s', $id_soal);
             $sql->execute();
 
-            header('location: ?page=user');
+            header('location: ?page=ujian');
          
          
       
@@ -34,6 +37,42 @@ if (isset($_GET['action'])) {
 
          }
          break;
+         case 'aktif':
+
+            if (isset($_GET['id'])) {
+   
+              $aa = mysqli_query($con, "UPDATE t_skategori SET aktif='1' WHERE idkategori='".$_GET['id']."'") or die(mysqli_error($con));
+   
+               header('location: ?page=ujian');
+            
+            
+         
+            } else {
+   
+               header('location: ./');
+   
+            }
+            break;
+            case 'nonaktif':
+
+               if (isset($_GET['id'])) {
+      
+                  $nis   = strip_tags(mysqli_real_escape_string($con, $_GET['id']));
+      
+                  $sql   = $con->prepare("UPDATE t_skategori SET aktif='0' WHERE idkategori = ?");
+                  $sql->bind_param('s', $id_soal);
+                  $sql->execute();
+      
+                  header('location: ?page=ujian');
+               
+               
+            
+               } else {
+      
+                  header('location: ./');
+      
+               }
+               break;
       default:
          include('./soal/list.php');
          break;
