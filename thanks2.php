@@ -22,10 +22,12 @@
             </div>
             <div class="modal-body">
             <center><img src="assets/img/home.png">
-				<h3>Terima Kasih Sudah Memvoting!</h3></center>
-                
                 <br>
-                    <button type="submit" style="float:right;" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <br>
+				<h3>Terima Kasih Sudah Mendaftar</h3></center>
+                <p class="text-center">Silahkan Klik Lanjut Untuk Melakukan Tes Online</p>
+                <br>
+                    <a href="quiz.php"><button type="submit" style="float:right;" class="btn btn-success" >Lanjut</button></a>
                 </form>
             </div>
         </div>

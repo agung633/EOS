@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 if(empty($_SESSION['nis'])){
       header("location:./index.php?page=error");
 }else{
@@ -51,17 +50,20 @@ if(empty($_SESSION['nis'])){
                         </div>
                   </nav>
                   <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-                  <div class="col-md-3 bauk text-center">
-                  <section class="section">
-                    <h2>Mulai Voting Sekarang!</h2>
-                    <a href="voting.php"><button class="btn2 aligns-items-center col-md-4 col-sm-4 col-4">Voting </button></a>
-                  </section>
-                    </div>
-                  </div>
-                  </div>
-            </header>
+                        <div class="container">
+                              <div style="background-color:white;margin-top:10px;margin-top:200px;padding:20px 10px;" class="jumbotron jumbotron-fluid section ">
+                                          </div>
+                              </div>
+                              
+                        </div>
+                </div>
+                        
             </div>
-            <?php include "ann.php"; ?>
+      </div>
+</header>
+</div>
+<div >
+            
       <script type="text/javascript">
 
 // Menu-toggle button
@@ -91,17 +93,6 @@ $(window).on("scroll", function() {
 </script>
 <?php
 include "footer.php";
-
-                  if (isset($_GET['page'])) {
-                        switch ($_GET['page']) {
-                        case 'terimakasih':
-                        include('./thanks2.php');
-                        break;
-                              }
-                  exit;
-                  }
-
-                  
 
 }
 ?>

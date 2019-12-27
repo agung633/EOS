@@ -1,4 +1,5 @@
-    
+<?php session_start();
+?>  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,14 +23,18 @@
             </div>
             <div class="modal-body">
             <center><img src="assets/img/home.png">
-				<h3>Terima Kasih Sudah Memvoting!</h3></center>
-                
                 <br>
-                    <button type="submit" style="float:right;" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <br>
+                <h3>Tes Online Sudah Selesai</h3>
+                <p>Hasil Akhir : <b><h4><?php echo $_SESSION['hasil'] ?></h4></b></p></center>
+          
+                <br>
+                    <a href="homepage.php"><button type="submit" style="float:right;" class="btn btn-success" >Lanjut</button></a>
                 </form>
             </div>
         </div>
     </div>
 </div>
 </body>
-</html>                     
+</html> 
+                    
